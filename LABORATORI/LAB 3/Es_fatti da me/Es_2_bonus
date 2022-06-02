@@ -1,0 +1,8 @@
+2. creare un “alias” in bash denominato “somma” che legge un numero (intero con
+segno) alla volta (numero+INVIO, numero+INVIO, …) e alla fine (immissione vuota
+premendo solo INVIO) stampa la somma dei numeri inseriti.
+
+
+alias somma='(var="."; dati="0"; while [[ ! -z "$var" ]]; do
+echo -n "Numero? "; read var; dati="$dati + $var"; done;
+dati="$dati 0"; echo "La somma è $(( $dati ))" )'
