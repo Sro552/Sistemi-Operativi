@@ -1,0 +1,15 @@
+alias longhest=' longer=""; data=""; fine="quit"; while [[ "$data" != "$fine" ]]; do read data; [[ ${#data} -gt ${#longer} ]] && longer="$data"; done; echo "${#longer}" >prova.txt; echo "$longer">>prova.txt;'
+
+alias longhest=' 
+    longer=""; 
+    data=""; 
+    fine="quit"; 
+    while [[ "$data" != "$fine" ]]; do 
+        read data; 
+        [[ ${#data} -gt ${#longer} ]] && longer="$data"; 
+    done; 
+    echo "${#longer}" >prova.txt; 
+    echo "$longer" >>prova.txt;
+'
+
+

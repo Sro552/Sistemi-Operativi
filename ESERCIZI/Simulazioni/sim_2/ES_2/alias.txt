@@ -1,0 +1,18 @@
+alias longhest=' longer=""; data=""; fine="quit"; while [[ "$data" != "$fine" ]]; do read data; [[ ${#data} -gt ${#longer} ]] && longer="$data"; done; echo "${#longer}"; echo "$longer";'
+
+alias longhest=' 
+    longer=""; 
+    data=""; 
+    fine="quit"; 
+    while [[ "$data" != "$fine" ]]; do 
+        read data; 
+        [[ ${#data} -gt ${#longer} ]] && longer="$data"; 
+    done; 
+    echo "${#longer}"; 
+    echo "$longer";
+'
+
+
+
+
+
