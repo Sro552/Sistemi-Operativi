@@ -8,8 +8,10 @@ verificandoli e memorizzando le opzioni corrette, restituendo un errore in caso 
 #define FALSE 0
 #define N_PARAMETRI 4
 
+//Lista di comandi validi
 const char* valid[] = {"-h" , "-m" , "-n" , "--help"}; 
 
+//Funzione per vedere se il comando è valido
 int isValid(char* str){
     for(int i=0 ; i < N_PARAMETRI ; i++){
         if(!strcmp(valid[i],str))
@@ -23,7 +25,7 @@ int main(int argc, char** argv){
     int indice = 0; //Variabile per l'indice dei parametri
 
     //Controllo parametri
-    for(int i=0 ; i < argc ; i++){
+    for(int i=1 ; i < argc ; i++){
         if(isValid(argv[i])){
             paramValidi[indice] = argv[i];
             indice++;
