@@ -4,7 +4,7 @@ char chr) (cerca chr in str e restituisce la posizione) */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+    
 char* stringrev(char *str){
     char tmp[50]; //Declare temporary string
     short len = strlen(str); //Save string length

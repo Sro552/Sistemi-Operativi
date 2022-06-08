@@ -6,9 +6,8 @@ make all --print-data-base --no-builtin-variables --no-builtin-rules --question
 # PARTICULAR PURPOSE.
 
 # This program built for i386-apple-darwin11.3.0
- 
 
-# Make data base, printed on Thu Jun  2 14:09:07 2022
+# Make data base, printed on Wed Jun  8 15:48:49 2022
 
 # Variables
 
@@ -25,7 +24,7 @@ VSCODE_LOG_NATIVE = false
 # automatic
 @F = $(notdir $@)
 # makefile
-CURDIR := /Volumes/GoogleDrive/Il mio Drive/SECONDO ANNO/S.O./Sistemi-Operativi
+CURDIR := /Volumes/GoogleDrive/Il mio Drive/SECONDO ANNO/Sistemi-Operativi
 # makefile
 SHELL = /bin/sh
 # environment
@@ -39,11 +38,11 @@ VSCODE_VERBOSE_LOGGING = true
 # environment
 __CFBundleIdentifier = com.microsoft.VSCode
 # environment
-VSCODE_IPC_HOOK_EXTHOST = /var/folders/vf/mb3p482557v30g0m415krvfh0000gn/T/vscode-ipc-4f1e01c3-5530-43db-883f-f7560da7c176.sock
+VSCODE_IPC_HOOK_EXTHOST = /var/folders/vf/mb3p482557v30g0m415krvfh0000gn/T/vscode-ipc-583a06d9-b85b-40f2-a733-eb4503fdd991.sock
 # environment
 VSCODE_CWD = /
 # environment
-PATH = /Library/Frameworks/Python.framework/Versions/3.10/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Frameworks/Python.framework/Versions/3.10/bin
+PATH = /Library/Frameworks/Python.framework/Versions/3.10/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 # environment
 VSCODE_LOG_STACK = false
 # environment
@@ -51,13 +50,13 @@ ELECTRON_RUN_AS_NODE = 1
 # default
 .FEATURES := target-specific order-only second-expansion else-if archives jobserver check-symlink
 # environment
-SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.Dp75L6rQx5/Listeners
+SSH_AUTH_SOCK = /private/tmp/com.apple.launchd.0zGS7ABWsE/Listeners
 # automatic
 %F = $(notdir $%)
 # environment
 VSCODE_PIPE_LOGGING = true
 # environment
-PWD = /Volumes/GoogleDrive/Il mio Drive/SECONDO ANNO/S.O./Sistemi-Operativi
+PWD = /Volumes/GoogleDrive/Il mio Drive/SECONDO ANNO/Sistemi-Operativi
 # environment
 ORIGINAL_XDG_CURRENT_DESKTOP = undefined
 # environment
@@ -71,7 +70,7 @@ VSCODE_CODE_CACHE_PATH = /Users/simoneroman/Library/Application Support/Code/Cac
 # environment
 LOGNAME = simoneroman
 # environment
-APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = 1
+APPLICATION_INSIGHTS_NO_DIAGNOSTIC_CHANNEL = true
 # environment
 VSCODE_HANDLES_UNCAUGHT_ERRORS = true
 # automatic
@@ -84,8 +83,6 @@ MAKE = $(MAKE_COMMAND)
 MAKECMDGOALS := all
 # environment
 SHLVL = 1
-# environment
-LOCAL_GIT_DIRECTORY = /Applications/GitHub Desktop.app/Contents/Resources/app/git
 # default
 MAKE_VERSION := 3.81
 # environment
@@ -135,9 +132,9 @@ MAKELEVEL := 0
 # environment
 LANG = C
 # environment
-VSCODE_PID = 6100
+VSCODE_PID = 1364
 # variable set hash-table stats:
-# Load=62/1024=6%, Rehash=0, Collisions=1/82=1%
+# Load=61/1024=6%, Rehash=0, Collisions=1/81=1%
 
 # Pattern-specific Variable Values
 
@@ -145,9 +142,9 @@ VSCODE_PID = 6100
 
 # Directories
 
-# . (device 905969666, inode -4048849514774357327): 7 files, no impossibilities.
+# . (device 905969666, inode 3912989276314583086): 8 files, no impossibilities.
 
-# 7 files, no impossibilities in 1 directories.
+# 8 files, no impossibilities in 1 directories.
 
 # Implicit Rules
 
@@ -219,7 +216,7 @@ GNUmakefile:
 # strcache size: total = 0 / max = 0 / min = 4096 / avg = 0
 # strcache free: total = 0 / max = 0 / min = 4096 / avg = 0
 
-# Finished Make data base on Thu Jun  2 14:09:07 2022
+# Finished Make data base on Wed Jun  8 15:48:49 2022
 
  
 make: *** No rule to make target `all'.  Stop.
