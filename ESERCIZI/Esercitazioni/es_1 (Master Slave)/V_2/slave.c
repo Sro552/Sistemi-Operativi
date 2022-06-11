@@ -48,7 +48,7 @@ void ascoltoMaster() {
 
         sleep(1); //Aspetto che il thread stesso non ascolti
         write(slavePipeFD[n_dest], msg, sizeof(msg)); //Invio messaggio
-
+        sleep(1);
         canread = 1; //lo rimetto in ascolto
     }
     //Chiudo la pipe
