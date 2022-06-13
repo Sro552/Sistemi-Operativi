@@ -157,7 +157,7 @@ int main(int argc, char **argv) {
     strcat(path, "/info");
     mkdir(path, 0755);
     if (errno == 2) {   //Controllo se il path dato da input è corretto
-        fprintf(stderr, "%sPERCORSO INSERITO ERRATO ./app <PATH> <N>%s\n", RED, DF);
+         rintf(stderr, "%sPERCORSO INSERITO ERRATO ./app <PATH> <N>%s\n", RED, DF);
         return 10;
     }
 

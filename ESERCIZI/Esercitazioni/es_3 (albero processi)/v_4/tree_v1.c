@@ -21,7 +21,7 @@
 #define WR 1
 
 //Funzioni
-void controlli_pipe_padre(int argc,char** argv){
+void controlli_pipe1(int argc,char** argv){
     
     if(argc!=2){
         printf("%sNumero argomenti errato!!%s\n",RED,DF);
@@ -56,30 +56,30 @@ int main(int argc,char** argv){
     int rett=0;
     int children[MAX_FIGLI];
 
-    controlli_pipe_padre(argc, argv);
+    controlli_pipe1(argc, argv);
     int n_figli=atoi(argv[1]);
 
-    // pipe_padre pipes used by the children to talk with the parent
-    int pipe_padre[n_figli][2];
+    // pipe1 pipes used by the children to talk with the parent
+    int pipe1[n_figli][2];
     
-    //pipe_figlio pipes used by the parent to talk with the childrens
-    int pipe_figlio[n_figli][2];
+    //pipe2 pipes used by the parent to talk with the childrens
+    int pipe2[n_figli][2];
 
     printf("Creating %d process\n",n_figli);
     //Cycle over the number of procs
     for(int i = 0;i<n_figli; i++){
         //Create pipes
-        pipe(pipe_padre[i]);
-        pipe(pipe_figlio[i]);
+        pipe(pipe1[i]);
+        pipe(pipe2[i]);
         isChild = fork();
         if(isChild != 0){ // Ancestor
             children[i]=isChild;
-            close(pipe_padre[i][WR]); //Close writing end of pipe_padre pipe
-            close(pipe_figlio[i][RD]); //Close read end of pipe_figlio pipe
+            close(pipe1[i][WR]); //Close writing end of pipe1 pipe
+            close(pipe2[i][RD]); //Close read end of pipe2 pipe
         }else{ //Child
             mypos=i;
-            close(pipe_figlio[i][WR]); //Close writing end of pipe_figlio pipe (child's pipe_padre)
-            close(pipe_padre[i][RD]);  //Close reading end of pipe_padre pipe (child's pipe_figlio)
+            close(pipe2[i][WR]); //Close writing end of pipe2 pipe (child's pipe1)
+            close(pipe1[i][RD]);  //Close reading end of pipe1 pipe (child's pipe2)
             break; //Break from the for loop if child. Child will have unique 'current' value
             
         }
@@ -95,8 +95,8 @@ int main(int argc,char** argv){
                 case 'r':
                     figlio_dest=atoi(command+1);
                     if(figlio_dest>=0 && figlio_dest<n_figli){
-                        write(pipe_figlio[figlio_dest][WR],"r",2);
-                        read(pipe_padre[figlio_dest][RD],&rett,50);
+                        write(pipe2[figlio_dest][WR],"r",2);
+                        read(pipe1[figlio_dest][RD],&rett,50);
                         printf("Child %d told me: '%d'\n",children[figlio_dest],rett);
                     }
                     else{
@@ -106,8 +106,8 @@ int main(int argc,char** argv){
                 case 'i':
                     figlio_dest=atoi(command+1);
                     if(figlio_dest>=0 && figlio_dest<n_figli){
-                        write(pipe_figlio[figlio_dest][WR],"i",2);
-                        read(pipe_padre[figlio_dest][RD],&rett,50);
+                        write(pipe2[figlio_dest][WR],"i",2);
+                        read(pipe1[figlio_dest][RD],&rett,50);
                         printf("Child %d told me: '%d'\n",children[figlio_dest],rett);
                     }
                     else{
@@ -127,18 +127,18 @@ int main(int argc,char** argv){
     else{
         srand(mypos);   // Initialization, should only be called once.
         while(1){
-            read(pipe_figlio[mypos][RD],&mesg,50);
+            read(pipe2[mypos][RD],&mesg,50);
             
             switch(mesg[0]){
                 case 'r':
                     printf("%sChild computing random%s\n",GREEN,DF);
                     rett=rand();
-                    write(pipe_padre[mypos][WR],&rett,sizeof(rett));
+                    write(pipe1[mypos][WR],&rett,sizeof(rett));
                 break;
                 case 'i':
                     printf("%sChild sending own pid%s\n",GREEN,DF);
                     rett=getpid();
-                    write(pipe_padre[mypos][WR],&rett,sizeof(rett));
+                    write(pipe1[mypos][WR],&rett,sizeof(rett));
                 break;
             }
         }
