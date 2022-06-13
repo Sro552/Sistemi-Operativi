@@ -14,7 +14,7 @@
 #define GREEN "\033[32m"
 #define DF "\033[0m"
 
-#define MAX_LEVEL 9
+#define MAX_LEVEL 9 //Numero massimo di livelli
 #define MAX 100
 
 //Strutture necessarie
@@ -24,12 +24,13 @@ typedef struct Msg_packet{
 } Msg_packet;
 
 //Variabili globali
-int level=2;
+
 int command_level;
 int my_level;
-int isChild;
-int myParent;
-int figli_livello[MAX_LEVEL];
+int isChild;    //Bool è figlio
+int myParent;   //Salvo il PID padre
+int figli_livello[MAX_LEVEL];   //Numero figli per livello
+char command[MAX];  //Command da tastiera
 
 //Funzioni
 
@@ -39,6 +40,7 @@ void creat_children(int command,int queue){
     snd_create.mtype=command-1;
     strcpy(snd_create.mtext,"c");
 
+    //Invio messaggio di create 
     for(int i=0;i<figli_livello[command-1];i++){
         msgsnd(queue,&snd_create,sizeof(snd_create.mtext),0);
         figli_livello[command]++;
@@ -50,7 +52,7 @@ void print_children(int queue){
     Msg_packet snd_print;
     //Setto il tipo al livello superiore e il testo a c (= create)
   
-
+    //Mando messaggio di stampa
     for(int i=0;i<MAX_LEVEL;i++){
         snd_print.mtype=i;
         strcpy(snd_print.mtext,"p");
@@ -65,7 +67,7 @@ void kill_children(int queue, int command){
     Msg_packet snd_kill;
     //Setto il tipo al livello superiore e il testo a c (= create)
   
-
+    //Mando messaggio di kill
     for(int i=MAX_LEVEL;i>=command;i--){
         snd_kill.mtype=i;
         strcpy(snd_kill.mtext,"k");
@@ -77,32 +79,38 @@ void kill_children(int queue, int command){
 }
 
 int main(int argc,char** argv){
+    //Reset array
+    for(int i=0;i<MAX_LEVEL;i++){
+        figli_livello[i]=0;
+    }
 
-    char command[MAX];
-
+    //Creo la queue
     key_t queuekey = ftok("/tmp/unique",1);
     int queue = msgget(queuekey, 0777 | IPC_CREAT);
 
 
     while(1){
         sleep(1); //Avoid graphic glithces
-        printf("\nNext command: ");
-        fgets(command,MAX,stdin); fflush(stdin);
+        //Prendo il nuovo comando
+        printf("\nNext command: "); fgets(command,MAX,stdin); fflush(stdin);
 
         switch (command[0]){
-            case 'c':
+            case 'c':   //Create
                 command_level=atoi(command+1);
-                if(command_level==1){
+                if(command_level==1){   //Se livello 1 creo subito
                     figli_livello[1]++;
                     printf("Creating child at level 1\n");
                     isChild=fork();
+                    printf("I'm new child at level 1 whith id = %d\n",getpid());
+                    my_level=1;
+                    myParent=getppid();
                 }
                 else if(command_level>1 && command_level<MAX_LEVEL){
                     printf("Creating child at level %d\n",command_level);
                     creat_children(command_level,queue);
                 }
                 else{
-                    printf("%s IL NUMERO DI LIVELLO TROPPO GRANDE\n%s",RED,DF);
+                    printf("%s IL NUMERO DI LIVELLO ERRATO\n%s",RED,DF);
                 }
                 break;
             case 'p':
@@ -121,19 +129,19 @@ int main(int argc,char** argv){
         }
         
         if(isChild==0){
-            printf("I'm new child at level 1 whith id = %d\n",getpid());
-            my_level=1;
-            myParent=getppid();
             break;
         }
     }
 
     while(1){
+        //Ricevo messaggio
         Msg_packet rcv;
         int tmp;
         msgrcv(queue,&rcv,sizeof(rcv.mtext),my_level,0);
+
+
         switch(rcv.mtext[0]){
-            case 'c':
+            case 'c':   //Create
                 tmp=my_level+1;
                 isChild=fork();
                 
@@ -143,13 +151,13 @@ int main(int argc,char** argv){
                     printf("I'm new child at level %d whith id = %d\n",my_level,getpid());
                 }
                 break;
-            case 'p':
-                for(int i=0;i<my_level;i++){
+            case 'p':   //Print
+                for(int i=1;i<my_level;i++){
                     printf("\t");
                 }
                 printf("%s[ID %d - Parent: %d] depth %d%s\n",GREEN,getpid(),myParent,my_level,DF);
                 break;
-            case 'k':
+            case 'k':   //Kill
                 exit(0);
                 break;
 
