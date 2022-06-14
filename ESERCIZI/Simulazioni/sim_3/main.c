@@ -25,7 +25,7 @@ typedef struct msg {
 
 //Variabili
 char path[MAX];
-int n;
+int n_child;
 key_t key;
 int queueID;
 char path_queue[MAX];
@@ -44,6 +44,8 @@ int controlli_input(int argc, char **argv) {
 
 void terminatorHandler(int signo) {
     kill(0, SIGTERM);
+    while(wait(NULL)>0);
+    exit(0);
 }
 
 void crea_file(int pid[]) {
@@ -59,7 +61,7 @@ void crea_file(int pid[]) {
     sprintf(str_key, "%d", pid[0]); //salvo pid padre
     strcat(str_key, "\n");
 
-    for (int i = 1; i < n + 1; i++) {
+    for (int i = 1; i < n_child + 1; i++) {
         sprintf(path_file, "%d", pid[i]);
         strcat(str_key, path_file);
 
@@ -86,7 +88,7 @@ void stampa_stdout(int pid[]) {
 
     strcpy(out, "");
     //Concateno i PID
-    for (int i = 1; i < n + 1; i++) {
+    for (int i = 1; i < n_child + 1; i++) {
         sprintf(tmp1, "%d", pid[i]);
         strcat(out, tmp1);
         strcat(out, " ");
@@ -129,7 +131,7 @@ void SIGUSR1_handler(int signo) {
 
     //Apro e scrivo sul file
     int openFile1 = open(pid_path, O_RDWR | O_APPEND);
-    write(openFile1, "SIGUSR1", strlen("SIGUSR1"));
+    write(openFile1, "SIGUSR1\n", strlen("SIGUSR1\n"));
     close(openFile1);
 }
 
@@ -157,18 +159,18 @@ int main(int argc, char **argv) {
     strcat(path, "/info");
     mkdir(path, 0755);
     if (errno == 2) {   //Controllo se il path dato da input è corretto
-         rintf(stderr, "%sPERCORSO INSERITO ERRATO ./app <PATH> <N>%s\n", RED, DF);
+        fprintf(stderr, "%sPERCORSO INSERITO ERRATO ./app <PATH> <N>%s\n", RED, DF);
         return 10;
     }
 
 
-    n = atoi(argv[2]); //Numero di figli da creare
-    int pid[n + 1];  //Tengo traccia di tutti i pid dei figli
+    n_child = atoi(argv[2]); //Numero di figli da creare
+    int pid[n_child + 1];  //Tengo traccia di tutti i pid dei figli
 
     pid[0] = getpid();  //Father PID
 
     //Creo i figli
-    for (int i = 1; i < n + 1; i++) {
+    for (int i = 1; i < n_child + 1; i++) {
         pid[i] = fork();
         if (pid[i] == 0) {
             //PARTE 4 gestione segnale SIGUSR1

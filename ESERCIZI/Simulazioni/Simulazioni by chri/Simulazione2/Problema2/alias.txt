@@ -1,3 +1,1 @@
-alias longhest=' data=""; max=""; while [[ $data != "quit" ]]; do read data; [[ ${#data}  > ${#max} ]] && max="$data"; done;  >&1 echo ${#max}; >&2 echo ${max};'
-
 alias longest='data=""; longest=""; while [[ $data != "quit" ]]; do; echo -n "Inserire parola: "; read data; if [[ $data != "quit" ]]; then if [[ ${#data} > ${#longest} ]]; then longest=$data; fi fi done; >&1 echo ${#longest}; >&2 echo ${longest};'

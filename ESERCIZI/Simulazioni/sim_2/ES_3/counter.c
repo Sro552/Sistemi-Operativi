@@ -99,6 +99,11 @@ int main(int argc,char** argv){
         return 10;
     }
 
+    if(fork()){
+        while(wait(NULL)>0);
+        return 0;
+    }
+
     if(!isFile){
 
         read(0,buf,MAX);
