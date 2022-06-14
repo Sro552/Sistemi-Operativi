@@ -69,7 +69,7 @@ int main(int argc, char ** argv){
         //Create string '/tmp/fifoMaster1/2/...'
         strcat(fifoMaster[i-1], str2);
         
-        //Delete file for FIFO
+        //Delete file for FIFO 
         unlink(fifoMaster[i-1]); //or remove(fifoMaster[i-1])
         
         //Create FIFO
