@@ -1,6 +1,0 @@
-make --dry-run --always-make --keep-going --print-directory
-make: Entering directory `/Volumes/GoogleDrive/Il mio Drive/SECONDO ANNO/Sistemi-Operativi/ESERCIZI'
-make: Leaving directory `/Volumes/GoogleDrive/Il mio Drive/SECONDO ANNO/Sistemi-Operativi/ESERCIZI'
- 
-make: *** No targets specified and no makefile found.  Stop.
-
